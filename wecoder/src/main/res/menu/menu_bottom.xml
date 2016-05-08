@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/bottombar_recents"
+        android:icon="@drawable/ic_wecoder_recent"
+        android:title="Recents" />
+
+    <item
+        android:id="@+id/bottombar_friends"
+        android:icon="@drawable/ic_wecoder_contact"
+        android:title="Friends" />
+
+    <item
+        android:id="@+id/bottombar_discovery"
+        android:icon="@drawable/ic_wecoder_discovery"
+        android:title="Discovery" />
+
+    <item
+        android:id="@+id/bottombar_me"
+        android:icon="@drawable/ic_wecoder_me"
+        android:title="Me" />
+</menu>

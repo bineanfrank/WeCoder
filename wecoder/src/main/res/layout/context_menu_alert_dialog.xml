@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_selection_1"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/ripple_primary"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:text="@string/camera"
+        android:textColor="#353535"
+        android:textSize="16sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:background="#d7d7d7" />
+
+    <TextView
+        android:id="@+id/tv_selection_2"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/ripple_primary"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:text="@string/album"
+        android:textColor="#353535"
+        android:textSize="16sp" />
+
+</LinearLayout>
