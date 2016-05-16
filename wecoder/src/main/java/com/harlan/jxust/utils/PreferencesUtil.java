@@ -97,4 +97,34 @@ public class PreferencesUtil {
     public void setPerLoc(boolean value) {
         editor.putBoolean(KEY_PER_LOC, value).commit();
     }
+
+    private static final String KEY_VIBRATE = "key_vibrate";
+
+    public void setVibrate(boolean value) {
+        editor.putBoolean(KEY_VIBRATE, value).commit();
+    }
+
+    public boolean getVibrate() {
+        return getBoolean(KEY_VIBRATE, false);
+    }
+
+    private static final String KEY_VOICE = "key_voice";
+
+    public void setVoice(boolean value) {
+        editor.putBoolean(KEY_VOICE, value).commit();
+    }
+
+    public boolean getVoice() {
+        return getBoolean(KEY_VOICE, false);
+    }
+
+    private static final String KEY_SPEAKER = "key_speaker";
+
+    public void setSpeaker(boolean value) {
+        editor.putBoolean(KEY_SPEAKER, value).commit();
+    }
+
+    public boolean getSpeaker() {
+        return getBoolean(KEY_SPEAKER, false);
+    }
 }

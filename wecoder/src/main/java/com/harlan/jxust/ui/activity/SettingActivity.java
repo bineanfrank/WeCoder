@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.GridView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -33,19 +35,19 @@ import cn.bmob.newim.BmobIM;
 /**
  * Created by Harlan on 2016/4/10.
  */
-public class SettingActivity extends BaseActivity {
+public class SettingActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener {
 
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
 
-    @Bind(R.id.rl_switch_notification)
-    RelativeLayout rl_switch_notification;
-    @Bind(R.id.rl_switch_sound)
-    RelativeLayout rl_switch_sound;
-    @Bind(R.id.rl_switch_vibrate)
-    RelativeLayout rl_switch_vibrate;
-    @Bind(R.id.rl_switch_speaker)
-    RelativeLayout rl_switch_speaker;
+    @Bind(R.id.iv_switch_notification)
+    SwitchCompat rl_switch_notification;
+    @Bind(R.id.iv_switch_sound)
+    SwitchCompat rl_switch_sound;
+    @Bind(R.id.iv_switch_vibrate)
+    SwitchCompat rl_switch_vibrate;
+    @Bind(R.id.iv_switch_speaker)
+    SwitchCompat rl_switch_speaker;
     @Bind(R.id.rl_switch_theme)
     RelativeLayout rl_switch_theme;
     @Bind(R.id.btn_logout)
@@ -56,6 +58,14 @@ public class SettingActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
         setupToolbar();
+
+        setupViews();
+    }
+
+    private void setupViews() {
+        rl_switch_sound.setOnCheckedChangeListener(this);
+        rl_switch_speaker.setOnCheckedChangeListener(this);
+        rl_switch_vibrate.setOnCheckedChangeListener(this);
     }
 
     private void setupToolbar() {
@@ -126,5 +136,17 @@ public class SettingActivity extends BaseActivity {
     protected void onDestroy() {
         setResult(RESULT_OK);
         super.onDestroy();
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        int id = buttonView.getId();
+        if (id == R.id.iv_switch_sound) {
+            PreferencesUtil.getInstance(this).setVoice(isChecked);
+        } else if (id == R.id.iv_switch_speaker) {
+            PreferencesUtil.getInstance(this).setSpeaker(isChecked);
+        } else if (id == R.id.iv_switch_vibrate) {
+            PreferencesUtil.getInstance(this).setVibrate(isChecked);
+        }
     }
 }
