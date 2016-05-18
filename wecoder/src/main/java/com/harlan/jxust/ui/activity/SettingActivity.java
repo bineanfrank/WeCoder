@@ -66,6 +66,10 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
         rl_switch_sound.setOnCheckedChangeListener(this);
         rl_switch_speaker.setOnCheckedChangeListener(this);
         rl_switch_vibrate.setOnCheckedChangeListener(this);
+
+        rl_switch_speaker.setChecked(PreferencesUtil.getInstance(this).getSpeaker());
+        rl_switch_sound.setChecked(PreferencesUtil.getInstance(this).getVoice());
+        rl_switch_vibrate.setChecked(PreferencesUtil.getInstance(this).getVibrate());
     }
 
     private void setupToolbar() {
