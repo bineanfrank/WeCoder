@@ -54,32 +54,4 @@
         android:layout_marginRight="12dp"
         android:background="#d9d9d9" />
 
-    <RelativeLayout
-        android:id="@+id/re_chatroom"
-        android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:background="@drawable/ripple_primary"
-        android:clickable="true">
-
-        <ImageView
-            android:id="@+id/iv_avatar2"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="12dp"
-            android:src="@drawable/default_chatroom" />
-
-        <TextView
-            android:id="@+id/tv_chatroom"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="12dp"
-            android:layout_toRightOf="@id/iv_avatar2"
-            android:text="群聊"
-            android:textColor="#353535"
-            android:textSize="16sp" />
-    </RelativeLayout>
-
 </LinearLayout>
