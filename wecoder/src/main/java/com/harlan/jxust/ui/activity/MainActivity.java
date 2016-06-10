@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.harlan.jxust.bean.User;
+import com.harlan.jxust.event.RefreshEvent;
 import com.harlan.jxust.model.UserModel;
 import com.harlan.jxust.ui.adapter.WeCoderPagerAdapter;
 import com.harlan.jxust.ui.fragment.ContactFragment;
@@ -210,6 +211,13 @@ public class MainActivity extends BaseActivity implements ObseverListener {
         }
     }
 
+    @Subscribe
+    public void onEventMainThread(RefreshEvent event){
+        if (mCViewPager.getCurrentItem() != 0) {
+            checkRedPoint();
+        }
+    }
+
     private void checkRedPoint() {
         int unread = (int) BmobIM.getInstance().getAllUnReadCount();
         if (unread > 0) {
@@ -271,8 +279,6 @@ public class MainActivity extends BaseActivity implements ObseverListener {
         switch (id) {
             case R.id.action_add_friend:
                 startActivity(SearchActivity.class, null, false);
-                return true;
-            case R.id.action_about:
                 return true;
         }
 

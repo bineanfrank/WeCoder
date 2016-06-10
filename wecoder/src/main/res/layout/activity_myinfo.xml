@@ -136,42 +136,6 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/re_erweima"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:background="@drawable/ripple_primary"
-                android:clickable="true"
-                android:visibility="gone">
-
-                <TextView
-                    android:id="@+id/tv_temp_erweima"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="20dp"
-                    android:text="二维码名片"
-                    android:textColor="#353535"
-                    android:textSize="16sp" />
-
-                <ImageView
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="20dp"
-                    android:src="@drawable/a_5" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.1dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginRight="12dp"
-                    android:background="#dadada" />
-            </RelativeLayout>
-
-            <RelativeLayout
                 android:id="@+id/re_sex"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
@@ -202,47 +166,6 @@
                     android:gravity="right"
                     android:singleLine="true"
                     android:text="男"
-                    android:textColor="#AAAAAA"
-                    android:textSize="14sp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.1dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginRight="12dp"
-                    android:background="#dadada" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/re_region"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:background="@drawable/ripple_primary"
-                android:clickable="true">
-
-                <TextView
-                    android:id="@+id/tv_temp_region"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="20dp"
-                    android:text="地区"
-                    android:textColor="#353535"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="20dp"
-                    android:layout_toRightOf="@id/tv_temp_region"
-                    android:ellipsize="end"
-                    android:gravity="right"
-                    android:singleLine="true"
-                    android:text="安徽合肥"
                     android:textColor="#AAAAAA"
                     android:textSize="14sp" />
 

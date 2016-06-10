@@ -2,8 +2,6 @@ package com.harlan.jxust.ui.activity;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -38,9 +36,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bmob.utils.BmobLog;
-import com.harlan.jxust.model.UserModel;
-import com.harlan.jxust.model.i.UpdateCacheListener;
 import com.harlan.jxust.ui.adapter.ChatAdapter;
 import com.harlan.jxust.ui.adapter.EmojiAdapter;
 import com.harlan.jxust.ui.adapter.EmojiPagerAdapter;
@@ -72,7 +67,6 @@ import cn.bmob.newim.bean.BmobIMImageMessage;
 import cn.bmob.newim.bean.BmobIMLocationMessage;
 import cn.bmob.newim.bean.BmobIMMessage;
 import cn.bmob.newim.bean.BmobIMTextMessage;
-import cn.bmob.newim.bean.BmobIMUserInfo;
 import cn.bmob.newim.core.BmobIMClient;
 import cn.bmob.newim.core.BmobRecordManager;
 import cn.bmob.newim.event.MessageEvent;
@@ -81,7 +75,6 @@ import cn.bmob.newim.listener.MessagesQueryListener;
 import cn.bmob.newim.listener.ObseverListener;
 import cn.bmob.newim.listener.OnRecordChangeListener;
 import cn.bmob.newim.notification.BmobNotificationManager;
-import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
 
 /**
@@ -395,7 +388,6 @@ public class ChatActivity extends BaseActivity implements ObseverListener {
                     try {
                         if (event.getY() < 0) {// 放弃录音
                             recordManager.cancelRecording();
-                            BmobLog.i("voice", "放弃发送语音");
                         } else {
                             int recordTime = recordManager.stopRecording();
                             if (recordTime > 1) {

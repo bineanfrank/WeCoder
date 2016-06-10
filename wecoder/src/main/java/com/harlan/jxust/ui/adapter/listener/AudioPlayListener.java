@@ -8,6 +8,7 @@ import android.media.MediaPlayer.OnPreparedListener;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.harlan.jxust.utils.PreferencesUtil;
 import com.harlan.jxust.wecoder.R;
 
 import java.io.File;
@@ -47,6 +48,16 @@ public class AudioPlayListener implements View.OnClickListener {
             return;
         }
         AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+
+        boolean voice = PreferencesUtil.getInstance(context).getVoice();
+        if (!voice) {
+            audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+        } else {
+            audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+            int ringerVolume = audioManager.getStreamMaxVolume(AudioManager.RINGER_MODE_NORMAL) / 3;
+            audioManager.setStreamVolume(AudioManager.RINGER_MODE_NORMAL, ringerVolume, 0);
+        }
+
         mediaPlayer = new MediaPlayer();
         if (isUseSpeaker) {
             audioManager.setMode(AudioManager.MODE_NORMAL);
@@ -129,12 +140,13 @@ public class AudioPlayListener implements View.OnClickListener {
                 return;
             }
         }
+        boolean isUseSpeaker = PreferencesUtil.getInstance(context).getSpeaker();
         if (message.getFromId().equals(currentObjectId)) {// 如果是自己发送的语音消息，则播放本地地址
             String localPath = message.getContent().split("&")[0];
-            startPlayRecord(localPath, true);
+            startPlayRecord(localPath, isUseSpeaker);
         } else {// 如果是收到的消息，则需要先下载后播放
             String localPath = BmobDownloadManager.getDownLoadFilePath(message);
-            startPlayRecord(localPath, true);
+            startPlayRecord(localPath, isUseSpeaker);
         }
     }
 }

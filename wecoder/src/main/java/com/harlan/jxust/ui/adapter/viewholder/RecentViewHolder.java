@@ -1,6 +1,7 @@
 package com.harlan.jxust.ui.adapter.viewholder;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -10,6 +11,7 @@ import com.bumptech.glide.Glide;
 import com.harlan.jxust.bean.User;
 import com.harlan.jxust.model.UserModel;
 import com.harlan.jxust.model.i.QueryUserListener;
+import com.harlan.jxust.ui.activity.MyInfoActivity;
 import com.harlan.jxust.ui.adapter.listener.OnRVClickListener;
 import com.harlan.jxust.ui.view.imageview.SuperImageView;
 import com.harlan.jxust.utils.EmojiHelper;
@@ -58,9 +60,12 @@ public class RecentViewHolder extends BaseViewHolder {
     public void bindData(Object o) {
         final BmobIMConversation conversation = (BmobIMConversation) o;
         List<BmobIMMessage> msgs = conversation.getMessages();
+        BmobIMMessage lastMsg;
         if (msgs != null && msgs.size() > 0) {
-            BmobIMMessage lastMsg = msgs.get(0);
+            lastMsg = msgs.get(0);
             String content = lastMsg.getContent();
+            String fromId = lastMsg.getFromId();
+            System.out.println(fromId);
             if (lastMsg.getMsgType().equals(BmobIMMessageType.TEXT.getType())) {
                 tv_content.setText(EmojiHelper.replace(context, content));
             } else if (lastMsg.getMsgType().equals(BmobIMMessageType.IMAGE.getType())) {
@@ -76,6 +81,16 @@ public class RecentViewHolder extends BaseViewHolder {
         }
 
         siv_avatar.loadImage(conversation.getConversationIcon(), false, R.drawable.default_avatar);
+
+        siv_avatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                User user = conversation.get
+//                Intent intent = new Intent(context, MyInfoActivity.class);
+//                intent.putExtra("user", user);
+//                startActivity(intent, null);
+            }
+        });
 
         //会话标题
         tv_name.setText(conversation.getConversationTitle());

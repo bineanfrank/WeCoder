@@ -1,15 +1,15 @@
 package com.harlan.jxust.ui.adapter.viewholder;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.harlan.jxust.ui.activity.MyInfoActivity;
 import com.harlan.jxust.ui.adapter.listener.OnRVClickListener;
-import com.harlan.jxust.ui.view.imageview.CircleImageView;
 import com.harlan.jxust.ui.view.imageview.SuperImageView;
 import com.harlan.jxust.utils.EmojiHelper;
 import com.harlan.jxust.wecoder.R;
@@ -77,6 +77,9 @@ public class SendTextHolder extends BaseViewHolder {
         siv_avatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(context, MyInfoActivity.class);
+                intent.putExtra("from", MyInfoActivity.FROM_SELF);
+                context.startActivity(intent);
             }
         });
 

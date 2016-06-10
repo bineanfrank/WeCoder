@@ -262,8 +262,7 @@ public class CircleImageView extends SuperImageView {
                 bitmap = Bitmap.createBitmap(COLORDRAWABLE_DIMENSION, COLORDRAWABLE_DIMENSION,
                         BITMAP_CONFIG);
             } else {
-                bitmap =
-                        Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(),
+                bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(),
                                 BITMAP_CONFIG);
             }
 

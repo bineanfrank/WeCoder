@@ -44,9 +44,6 @@ public class LoginActivity extends BaseActivity {
     @Bind(R.id.tv_register)
     TextView tv_register;
 
-    @Bind(R.id.tv_wenti)
-    TextView tv_wenti;
-
     @Bind(R.id.id_login_wrapper)
     View wrapperView;
 

@@ -1,5 +1,7 @@
 package com.harlan.jxust.bean;
 
+import com.harlan.jxust.db.NewFriend;
+
 import java.util.List;
 
 import cn.bmob.v3.BmobUser;
@@ -16,9 +18,14 @@ public class User extends BmobUser {
     private String nick;
     private String avatar;
     private String sign;
-    private List<String> contacts;
 
     public User() {
+    }
+
+    public User(NewFriend friend) {
+        setObjectId(friend.getUid());
+        setUsername(friend.getName());
+        setAvatar(friend.getAvatar());
     }
 
     public String getSign() {
@@ -60,16 +67,6 @@ public class User extends BmobUser {
     public void setTopc(String topc) {
         this.topc = topc;
     }
-
-    public List<String> getContacts() {
-        return contacts;
-    }
-
-    public void setContacts(List<String> contacts) {
-        this.contacts = contacts;
-    }
-
-
 
     public String getAvatar() {
         return avatar;

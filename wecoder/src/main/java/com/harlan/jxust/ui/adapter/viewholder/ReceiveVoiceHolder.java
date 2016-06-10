@@ -109,7 +109,6 @@ public class ReceiveVoiceHolder extends BaseViewHolder {
                 return true;
             }
         });
-
     }
 
     public void showTime(boolean isShow) {

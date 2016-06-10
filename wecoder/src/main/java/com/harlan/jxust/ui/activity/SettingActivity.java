@@ -1,8 +1,11 @@
 package com.harlan.jxust.ui.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.AudioManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
@@ -66,10 +69,12 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
         rl_switch_sound.setOnCheckedChangeListener(this);
         rl_switch_speaker.setOnCheckedChangeListener(this);
         rl_switch_vibrate.setOnCheckedChangeListener(this);
+        rl_switch_notification.setOnCheckedChangeListener(this);
 
         rl_switch_speaker.setChecked(PreferencesUtil.getInstance(this).getSpeaker());
         rl_switch_sound.setChecked(PreferencesUtil.getInstance(this).getVoice());
         rl_switch_vibrate.setChecked(PreferencesUtil.getInstance(this).getVibrate());
+        rl_switch_notification.setChecked(PreferencesUtil.getInstance(this).getNofity());
     }
 
     private void setupToolbar() {
@@ -151,6 +156,8 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
             PreferencesUtil.getInstance(this).setSpeaker(isChecked);
         } else if (id == R.id.iv_switch_vibrate) {
             PreferencesUtil.getInstance(this).setVibrate(isChecked);
+        } else if (id == R.id.iv_switch_notification) {
+            PreferencesUtil.getInstance(this).setNotify(isChecked);
         }
     }
 }

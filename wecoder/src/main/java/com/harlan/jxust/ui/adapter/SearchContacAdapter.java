@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import com.harlan.jxust.bean.User;
 import com.harlan.jxust.ui.adapter.listener.OnRVClickListener;
 import com.harlan.jxust.ui.adapter.viewholder.BaseViewHolder;
-import com.harlan.jxust.ui.adapter.viewholder.ContactViewHolder;
+import com.harlan.jxust.ui.adapter.viewholder.SearchViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +55,7 @@ public class SearchContacAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ContactViewHolder(parent.getContext(), parent, onRVClickListener, false);
+        return new SearchViewHolder(parent.getContext(), parent, onRVClickListener, false);
     }
 
     @Override

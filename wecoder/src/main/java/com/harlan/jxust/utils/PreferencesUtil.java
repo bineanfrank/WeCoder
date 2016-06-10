@@ -127,4 +127,14 @@ public class PreferencesUtil {
     public boolean getSpeaker() {
         return getBoolean(KEY_SPEAKER, false);
     }
+
+    private static final String KEY_NOTIFY = "key_notify";
+
+    public void setNotify(boolean value) {
+        editor.putBoolean(KEY_NOTIFY, value).commit();
+    }
+
+    public boolean getNofity() {
+        return getBoolean(KEY_NOTIFY, false);
+    }
 }

@@ -63,6 +63,7 @@
             android:theme="@style/ImageSelectorTheme" />
 
         <activity android:name="com.harlan.jxust.ui.activity.SettingActivity" />
+        <activity android:name="com.harlan.jxust.ui.activity.NewFriendActivity" />
         <activity android:name="com.harlan.jxust.ui.activity.LoginActivity" />
         <activity
             android:name="com.harlan.jxust.ui.activity.ChatActivity"
@@ -83,6 +84,7 @@
             android:screenOrientation="portrait" />
 
 
+        <!-- bmobim start -->
         <receiver android:name="cn.bmob.newim.core.ConnectChangeReceiver">
             <intent-filter>
                 <action android:name="cn.bmob.action.RECONNECT" />
@@ -95,13 +97,17 @@
         <service
             android:name="cn.bmob.newim.core.service.BmobImService"
             android:process=":bmobcore" />
+        <service
+            android:name="cn.bmob.newim.core.service.NotifyService"
+            android:process=":bmobcore" />
         <service android:name="cn.bmob.newim.core.service.ReConnectService" />
         <service android:name="cn.bmob.newim.core.service.HeartBeatService" />
 
+        <!-- 设置bmob appkey -->
         <meta-data
             android:name="Bmob_APP_KEY"
-            android:value="e6ed23c171ecb8090f4fdf837459800e" />
-
+            android:value="dbfe0e027e5832c7a5494d9991a5b938" />
+        <!-- bmobim end -->
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"

@@ -1,6 +1,5 @@
 package com.harlan.jxust.ui.activity;
 
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -14,17 +13,12 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.harlan.jxust.bean.User;
 import com.harlan.jxust.model.UserModel;
-import com.harlan.jxust.ui.adapter.RecentAdapter;
 import com.harlan.jxust.ui.adapter.SearchContacAdapter;
 import com.harlan.jxust.ui.adapter.listener.OnRVClickListener;
 import com.harlan.jxust.wecoder.R;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -39,14 +33,10 @@ public class SearchActivity extends BaseActivity {
 
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.rl_scan)
-    RelativeLayout rl_scan;
     @Bind(R.id.et_search_box)
     EditText mEditText;
     @Bind(R.id.rv_search_contacts)
     RecyclerView rv_search_contacts;
-    @Bind(R.id.ll_erweicode)
-    LinearLayout ll_erweicode;
     @Bind(R.id.btn_search)
     Button btn_search;
 
@@ -104,8 +94,6 @@ public class SearchActivity extends BaseActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(TextUtils.isEmpty(s)){
-                    ll_erweicode.setVisibility(View.VISIBLE);
-                    rl_scan.setVisibility(View.VISIBLE);
                     mAdapter.clear();
                 }
             }
@@ -128,26 +116,20 @@ public class SearchActivity extends BaseActivity {
         mDialog.show();
 
         //有字符变化时，动态获取搜索结果
-        UserModel.getInstance().queryContacts(prefix, new FindListener() {
+        UserModel.getInstance().queryUsers(prefix, new FindListener() {
             @Override
             public void onSuccess(List list) {
                 System.out.println(list);
                 if (list != null && list.size() > 0) {
-                    ll_erweicode.setVisibility(View.GONE);
-                    rl_scan.setVisibility(View.GONE);
                     mAdapter.setDatas(list);
                     mAdapter.notifyDataSetChanged();
                 } else {
-                    ll_erweicode.setVisibility(View.VISIBLE);
-                    rl_scan.setVisibility(View.VISIBLE);
                 }
                 mDialog.dismiss();
             }
 
             @Override
             public void onError(int i, String s) {
-                ll_erweicode.setVisibility(View.VISIBLE);
-                rl_scan.setVisibility(View.VISIBLE);
                 mDialog.dismiss();
             }
         });

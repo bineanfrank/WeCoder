@@ -12,7 +12,10 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.harlan.jxust.bean.AddFriendMessage;
+import com.harlan.jxust.bean.Friend;
 import com.harlan.jxust.bean.User;
 import com.harlan.jxust.event.ChatEvent;
 import com.harlan.jxust.model.UserModel;
@@ -29,16 +32,23 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.OnClick;
 import cn.bmob.newim.BmobIM;
 import cn.bmob.newim.bean.BmobIMConversation;
+import cn.bmob.newim.bean.BmobIMMessage;
 import cn.bmob.newim.bean.BmobIMUserInfo;
+import cn.bmob.newim.core.BmobIMClient;
 import cn.bmob.newim.listener.ConversationListener;
+import cn.bmob.newim.listener.MessageSendListener;
+import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.UploadFileListener;
@@ -56,8 +66,6 @@ public class MyInfoActivity extends BaseActivity {
     RelativeLayout rl_fxid;
     @Bind(R.id.re_sex)
     RelativeLayout rl_sex;
-    @Bind(R.id.re_region)
-    RelativeLayout rl_region;
     @Bind(R.id.re_sign)
     RelativeLayout rl_sign;
     @Bind(R.id.iv_avatar)
@@ -72,8 +80,6 @@ public class MyInfoActivity extends BaseActivity {
     TextView tv_sign;
     @Bind(R.id.toolbar)
     Toolbar mToolbar;
-    @Bind(R.id.re_erweima)
-    RelativeLayout re_erweima;
     @Bind(R.id.rl_start_chat)
     RelativeLayout rl_start_chat;
     @Bind(R.id.rl_add_as_friend)
@@ -96,10 +102,8 @@ public class MyInfoActivity extends BaseActivity {
 
         Intent intent = getIntent();
         if (intent.getIntExtra("from", 0) == FROM_SELF) {
-            re_erweima.setVisibility(View.VISIBLE);
             user = UserModel.getInstance().getCurrentUser();
         } else {
-            re_erweima.setVisibility(View.GONE);
             user = (User) intent.getSerializableExtra("user");
             isSelf = false;
         }
@@ -146,7 +150,15 @@ public class MyInfoActivity extends BaseActivity {
     }
 
     private boolean isMyFriend(String objectId) {
-        return true;
+        List<Friend> list = UserModel.getInstance().getContacts();
+        if (list != null && list.size() > 0) {
+            for (Friend friend : list) {
+                if (friend.getFriendUser().getObjectId().equals(objectId)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private void setupToolbar() {
@@ -154,7 +166,7 @@ public class MyInfoActivity extends BaseActivity {
         if (isSelf) {
             mToolbar.setTitle("个人信息");
         } else {
-            mToolbar.setTitle(user.getNick() + "的个人信息");
+            mToolbar.setTitle(user.getNick() == null ? user.getObjectId() + "的个人信息" : user.getNick() + "的个人信息");
         }
         mToolbar.setTitleTextAppearance(this, android.R.style.TextAppearance_Medium);
         mToolbar.setTitleTextColor(Color.WHITE);
@@ -272,9 +284,32 @@ public class MyInfoActivity extends BaseActivity {
 
     @OnClick(R.id.rl_add_as_friend)
     public void onAddFriendClick(View view) {
-        System.out.println("onAddFriendClick");
-
-        // TODO: 2016/4/29 发送好友请求
+        BmobIMUserInfo info = new BmobIMUserInfo(user.getObjectId(), user.getUsername(), user.getAvatar());
+        //启动一个会话，如果isTransient设置为true,则不会创建在本地会话表中创建记录，
+        //设置isTransient设置为false,则会在本地数据库的会话列表中先创建（如果没有）与该用户的会话信息，且将用户信息存储到本地的用户表中
+        BmobIMConversation c = BmobIM.getInstance().startPrivateConversation(info, true, null);
+        //这个obtain方法才是真正创建一个管理消息发送的会话
+        BmobIMConversation conversation = BmobIMConversation.obtain(BmobIMClient.getInstance(), c);
+        AddFriendMessage msg = new AddFriendMessage();
+        User currentUser = BmobUser.getCurrentUser(this, User.class);
+        msg.setContent("很高兴认识你，可以加个好友吗?");//给对方的一个留言信息
+        Map<String, Object> map = new HashMap<>();
+        map.put("name", currentUser.getUsername());//发送者姓名，这里只是举个例子，其实可以不需要传发送者的信息过去
+        map.put("avatar", currentUser.getAvatar());//发送者的头像
+        map.put("uid", currentUser.getObjectId());//发送者的uid
+        msg.setExtraMap(map);
+        conversation.sendMessage(msg, new MessageSendListener() {
+            @Override
+            public void done(BmobIMMessage msg, BmobException e) {
+                if (e == null) {//发送成功
+//                    SnackbarUtil.show(MyInfoActivity.this, "好友请求发送成功，等待验证");
+                    Toast.makeText(MyInfoActivity.this, "好友请求发送成功，等待验证", Toast.LENGTH_SHORT).show();
+                } else {//发送失败
+//                    SnackbarUtil.show(MyInfoActivity.this, "发送失败！");
+                    Toast.makeText(MyInfoActivity.this, "发送失败！", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     @Subscribe

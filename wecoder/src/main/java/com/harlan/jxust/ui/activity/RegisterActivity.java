@@ -12,11 +12,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
-import com.bumptech.glide.Glide;
 import com.harlan.jxust.event.FinishEvent;
 import com.harlan.jxust.model.UserModel;
 import com.harlan.jxust.ui.adapter.listener.TextWatcher;
-import com.harlan.jxust.ui.view.imageview.CircleImageView;
 import com.harlan.jxust.ui.view.imageview.SuperImageView;
 import com.harlan.jxust.utils.ImageConfigUtil;
 import com.harlan.jxust.utils.ImageSelector;
@@ -26,15 +24,12 @@ import com.harlan.jxust.wecoder.R;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.io.File;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.LogInListener;
-import cn.bmob.v3.listener.UploadFileListener;
 
 /**
  * Created by Harlan on 2016/4/11.

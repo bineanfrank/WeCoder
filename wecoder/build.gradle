@@ -31,4 +31,14 @@ dependencies {
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.androidadvance:topsnackbar:0.0.8'
     compile 'com.github.bumptech.glide:glide:3.7.0'
+
+    //bmob-im所需的依赖包
+    compile 'cn.bmob.android:androidasync:2.1.6'
+    //bmob-sdk:3.4.6需要依赖okhttp（2.4.0）、okio（2.4.0）,而support-v4（23.2.1）和org.apache.http.legacy包是为了兼容Android6.0系统所需
+    compile 'cn.bmob.android:bmob-sdk:3.4.6'
+    compile('com.android.support:support-v4:23.2.1') {
+        exclude module: 'support-annotations'
+    }
+        compile 'com.squareup.okhttp:okhttp:2.4.0'
+    compile 'com.squareup.okio:okio:1.4.0'
 }

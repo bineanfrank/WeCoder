@@ -5,6 +5,7 @@ import android.util.SparseIntArray;
 import android.view.ViewGroup;
 import android.widget.SectionIndexer;
 
+import com.harlan.jxust.bean.Friend;
 import com.harlan.jxust.bean.User;
 import com.harlan.jxust.ui.adapter.listener.OnRVClickListener;
 import com.harlan.jxust.ui.adapter.viewholder.BaseViewHolder;
@@ -27,7 +28,7 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private static final int VIEW_TYPE_CONTACT_NO_TOPC = 0x3;
     private static final int VIEW_TYPE_FOOTER = 0x4;
 
-    private List<User> users = new ArrayList<>();
+    private List<Friend> users = new ArrayList<>();
     private SparseIntArray positionOfSection;
     private SparseIntArray sectionOfPosition;
     private List<String> list;
@@ -36,7 +37,7 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         list = new ArrayList<>();
     }
 
-    public void setDatas(List<User> list) {
+    public void setDatas(List<Friend> list) {
         users.clear();
         if (null != list) {
             users.addAll(list);
@@ -49,7 +50,7 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
      * @param position
      * @return
      */
-    public User getItem(int position) {
+    public Friend getItem(int position) {
         return users.get(position - 1);
     }
 
@@ -83,7 +84,7 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (position == 0) {
-
+            ((BaseViewHolder) holder).bindData(null);
         } else if (position == users.size() + 1) {
             ((BaseViewHolder) holder).bindData(users.size());
         } else {
@@ -102,14 +103,13 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         if (position == 0) {
             return VIEW_TYPE_HEADER;
         } else if (position == users.size() + 1) {
-            System.out.println("Footer View, position = " + position);
             return VIEW_TYPE_FOOTER;
         } else {
             if (position == 1) {
                 return VIEW_TYPE_CONTACT_WITH_TOPC;
             } else {
-                String topC = users.get(position - 1).getTopc();
-                if (topC != null && !topC.equals(getItem(position - 1).getTopc())) {
+                String topC = users.get(position - 1).getFriendUser().getTopc();
+                if (topC != null && !topC.equals(getItem(position - 1).getFriendUser().getTopc())) {
                     if ("".equals(topC)) return VIEW_TYPE_CONTACT_NO_TOPC;
                     else return VIEW_TYPE_CONTACT_WITH_TOPC;
                 } else {
@@ -140,7 +140,7 @@ public class ContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         sectionOfPosition.put(0, 0);
         list.add("*");
         for (int i = 1; i < count - 1; i++) {
-            String letter = getItem(i).getTopc();
+            String letter = getItem(i).getFriendUser().getTopc();
             int section = list.size() - 1;
             if (list.get(section) != null && !list.get(section).equals(letter)) {
                 list.add(letter);

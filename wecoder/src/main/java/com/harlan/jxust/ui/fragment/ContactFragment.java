@@ -8,9 +8,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import com.harlan.jxust.bean.Friend;
 import com.harlan.jxust.bean.User;
 import com.harlan.jxust.event.ChatEvent;
 import com.harlan.jxust.model.UserModel;
+import com.harlan.jxust.ui.activity.NewFriendActivity;
 import com.harlan.jxust.ui.adapter.ContactAdapter;
 import com.harlan.jxust.ui.adapter.listener.OnRVClickListener;
 import com.harlan.jxust.ui.activity.ChatActivity;
@@ -32,6 +34,7 @@ import cn.bmob.newim.bean.BmobIMConversation;
 import cn.bmob.newim.bean.BmobIMUserInfo;
 import cn.bmob.newim.listener.ConversationListener;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.DeleteListener;
 import cn.bmob.v3.listener.FindListener;
 
 /**
@@ -88,21 +91,39 @@ public class ContactFragment extends BaseFragment {
         mContactAdapter.setOnRVClickListener(new OnRVClickListener() {
             @Override
             public void onItemClick(int position) {
+                System.out.println("position = " + position);
                 if (position == 0) {
-                    SnackbarUtil.show(view, "HeaderView Clicked");
+//                    SnackbarUtil.show(view, "HeaderView Clicked");
+                    startActivity(NewFriendActivity.class, null);
                 } else if (position == mContactAdapter.getItemCount() - 1) {
-                    SnackbarUtil.show(view, "FooterView Clicked");
+//                    SnackbarUtil.show(view, "FooterView Clicked");
                 } else {
-                    User user = mContactAdapter.getItem(position);
+                    Friend friend = mContactAdapter.getItem(position);
+                    User user = friend.getFriendUser();
                     BmobIMUserInfo info = new BmobIMUserInfo(user.getObjectId(), user.getUsername(), user.getAvatar());
-                    EventBus.getDefault().post(new ChatEvent(info));
+                    //启动一个会话，实际上就是在本地数据库的会话列表中先创建（如果没有）与该用户的会话信息，且将用户信息存储到本地的用户表中
+                    BmobIMConversation c = BmobIM.getInstance().startPrivateConversation(info, null);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("c", c);
+                    startActivity(ChatActivity.class, bundle);
                 }
             }
 
             @Override
-            public boolean onItemLongClick(int position) {
+            public boolean onItemLongClick(final int position) {
                 if (position != 0) {
-                    mContactAdapter.remove(position);
+                    UserModel.getInstance().deleteFriend(mContactAdapter.getItem(position), new DeleteListener() {
+                        @Override
+                        public void onSuccess() {
+                            mContactAdapter.remove(position);
+                        }
+
+                        @Override
+                        public void onFailure(int i, String s) {
+                        }
+                    });
+                    return true;
+
                 }
                 return true;
             }
@@ -114,12 +135,12 @@ public class ContactFragment extends BaseFragment {
      *
      * @param list
      */
-    private void refresh(List<User> list) {
-        Collections.sort(list, new Comparator<User>() {
+    private void refresh(List<Friend> list) {
+        Collections.sort(list, new Comparator<Friend>() {
             @Override
-            public int compare(User lhs, User rhs) {
-                char py1 = lhs.getTopc().charAt(0);
-                char py2 = rhs.getTopc().charAt(0);
+            public int compare(Friend lhs, Friend rhs) {
+                char py1 = lhs.getFriendUser().getTopc().charAt(0);
+                char py2 = rhs.getFriendUser().getTopc().charAt(0);
                 if (py1 == py2) return 0;
                 return py1 < py2 ? -1 : 1;
             }
@@ -150,11 +171,11 @@ public class ContactFragment extends BaseFragment {
     @Override
     protected void initData() {
         handler.sendEmptyMessage(MSG_TYPE_VISIBLE);
-        List<User> list = UserModel.getInstance().getContacts();
+        List<Friend> list = UserModel.getInstance().getContacts();
         if (list == null || list.size() <= 0) {
-            UserModel.getInstance().queryContacts(new FindListener<User>() {
+            UserModel.getInstance().queryFriends(new FindListener<Friend>() {
                 @Override
-                public void onSuccess(List<User> list) {
+                public void onSuccess(List<Friend> list) {
                     //SnackbarUtil.show(view, "共找到" + list.size() + "位联系人");
                     refresh(list);
                     handler.sendEmptyMessage(MSG_TYPE_GONE);

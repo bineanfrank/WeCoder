@@ -1,6 +1,7 @@
 package com.harlan.jxust.ui.adapter.viewholder;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -9,6 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.harlan.jxust.ui.activity.LocationActivity;
+import com.harlan.jxust.ui.activity.MyInfoActivity;
 import com.harlan.jxust.ui.adapter.listener.OnRVClickListener;
 import com.harlan.jxust.ui.view.imageview.SuperImageView;
 import com.harlan.jxust.wecoder.R;
@@ -77,7 +79,9 @@ public class SendLocationHolder extends BaseViewHolder {
         siv_avatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // toast("点击" + info.getName() + "的头像");
+                Intent intent = new Intent(context, MyInfoActivity.class);
+                intent.putExtra("from", MyInfoActivity.FROM_SELF);
+                context.startActivity(intent);
             }
         });
 
